@@ -8,15 +8,15 @@ import 'app_style.dart';
 class Themes {
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
-    // appBarTheme: const AppBarTheme(
-    //   systemOverlayStyle: SystemUiOverlayStyle(
-    //       statusBarColor: Colors.white,
-    //       statusBarBrightness: Brightness.light,
-    //       statusBarIconBrightness: Brightness.dark,
-    //       systemNavigationBarColor:Colors.cyan,
-    //       systemNavigationBarDividerColor:Colors.red,
-    //   systemNavigationBarContrastEnforced:false ),
-    // ),
+    appBarTheme: const AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor:Colors.cyan,
+          systemNavigationBarDividerColor:Colors.red,
+      systemNavigationBarContrastEnforced:false ),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.white,

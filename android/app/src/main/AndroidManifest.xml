@@ -2,6 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appgain">
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +17,7 @@
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize"
-            tools:targetApi="cupcake">
+            tools:ignore="UnusedAttribute">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -22,18 +25,29 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="com.scytec.datamobile.vd.gui.android.AppPreferenceActivity" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="api.themoviedb.org"
-                    android:scheme="https" />
-                <data android:scheme="http" />
 
+                <data
+                    android:host="com.open"
+                    android:scheme="movieapptask" />
+                <data
+                    android:host="open"
+                    android:scheme="https"
+                    android:pathPrefix="/movieapptask" />
+
+
+                <data android:scheme="https" />
+                <data
+                    android:host="movieapptask"
+                    android:pathPrefix="/open" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

@@ -1,16 +1,14 @@
-import 'package:appgain/business_logic/cubit/home_page_cubit.dart';
-import 'package:appgain/business_logic/cubit/home_page_states.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/custom_button.dart';
+import '../../../controllers/cubit/home_page_cubit.dart';
+import '../../../controllers/cubit/home_page_states.dart';
 import 'Components/movie_detail_view.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
-  const MovieDetailsScreen({
-    Key? key,
+  const MovieDetailsScreen({Key? key
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

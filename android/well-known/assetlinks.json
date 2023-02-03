@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.example.appgain",
+    "sha256_cert_fingerprints":
+    ["79:ED:F0:24:D7:D1:59:AA:24:9C:52:76:FE:39:1E:83:FF:15:C0:7D:C9:A0:46:0F:D7:3C:55:2F:A4:AB:D5:02"]
+  }
+}]

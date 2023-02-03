@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../Data/models/movie_details.dart';
 import '../../../../core/app_color.dart';
 import '../../../../core/app_style.dart';
 import '../../../../core/end_point.dart';
+import '../../../../models/movie_details.dart';
 
 class MovieDetailView extends StatelessWidget {
   const MovieDetailView({

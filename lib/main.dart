@@ -1,45 +1,49 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:appgain/Utils/helpers_fun.dart';
-import 'package:appgain/business_logic/cubit/home_page_cubit.dart';
+import 'package:appgain/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'Core/theme.dart';
-import 'Presentation/screens/home_screen/home_screen.dart';
-import 'Presentation/screens/splash_screen/splash_screen.dart';
-import 'business_logic/bloc_opserver.dart';
+import 'controllers/bloc_opserver.dart';
 import 'data/Network/Remote/dio_helper.dart';
+
 Future<void> backGroundMessage(RemoteMessage message) async {
-  print('THANKYOU');
-  print('${message.notification!.body}');
+  debugPrint('${message.notification!.body}');
 }
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  var token =await FirebaseMessaging.instance.getToken();
+
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);  await Firebase.initializeApp();
+  var token = await FirebaseMessaging.instance.getToken();
   printMessage('$token');
   FirebaseMessaging.onMessage.listen((event) {
     printMessage('${event.data}');
-  }).onError((error){
+  }).onError((error) {
     printMessage('$error');
   });
   //WHEN CLICK NOTIFICATION TO OPEN APP
-  FirebaseMessaging.onMessageOpenedApp.listen((event) { });
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {});
   //BACKGROUND FCM
   FirebaseMessaging.onBackgroundMessage(backGroundMessage);
   DioHelper.init();
   Bloc.observer = MyBlocObserver();
-  runApp(const MyApp());
+  runApp(MyApp(
+      appRouter: AppRouter(),
+      ));
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
+    required this.appRouter,
   });
+
+  final AppRouter appRouter;
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +52,10 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context)=>HomePageCubit()..getAllMovies())
-            ],
-            child: MaterialApp(
-              title: 'Flutter Demo',
-              theme: Themes.lightTheme,
-              home: AnimatedSplashScreen(
-                splashIconSize:double.infinity ,
-                splash: const SplashScreen(),
-                nextScreen: const HomeScreen(),
-              ),
-            ),
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: Themes.lightTheme,
+            onGenerateRoute: appRouter.generateRoute,
           );
         });
   }

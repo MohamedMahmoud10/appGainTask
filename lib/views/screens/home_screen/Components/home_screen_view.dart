@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Data/models/popular_movies.dart';
-import '../../../../business_logic/cubit/home_page_cubit.dart';
+
+import '../../../../controllers/cubit/home_page_cubit.dart';
 import '../../../../core/app_color.dart';
 import '../../../../core/app_style.dart';
 import '../../../../core/end_point.dart';
+import '../../../../models/popular_movies.dart';
 import '../../details_screen/details_screen.dart';
 
 class HomeScreenView extends StatelessWidget {
@@ -20,8 +21,7 @@ class HomeScreenView extends StatelessWidget {
         onTap: () async {
           await BlocProvider.of<HomePageCubit>(context)
               .getMovieDetails(id: results.id!);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const MovieDetailsScreen()));
+          Navigator.of(context).pushNamed('/detailsScreen',arguments: results.id);
         },
         child: Column(
           children: [
@@ -30,10 +30,9 @@ class HomeScreenView extends StatelessWidget {
               height: size.height / 2.5,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: CachedNetworkImageProvider(
-                      '$imagePath${results.posterPath}'),
-                  fit: BoxFit.cover
-                ),
+                    image: CachedNetworkImageProvider(
+                        '$imagePath${results.posterPath}'),
+                    fit: BoxFit.cover),
               ),
             ),
             Align(
