@@ -1,4 +1,5 @@
 
+
 import 'package:appgain/views/screens/details_screen/details_screen.dart';
 import 'package:appgain/views/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,20 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 import 'controllers/cubit/home_page_cubit.dart';
+import 'data/Network/Remote/dio_helper.dart';
 
 class AppRouter {
   late HomePageCubit movieCubit;
 
   AppRouter() {
-    movieCubit = HomePageCubit();
+    movieCubit = HomePageCubit(DioHelper());
   }
 
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      // case '/':
-      //   return MaterialPageRoute(
-      //     builder: ((context) => const SplashScreen()
-      //     ),);
       case '/':
         return MaterialPageRoute(
             builder: ((context) => BlocProvider(

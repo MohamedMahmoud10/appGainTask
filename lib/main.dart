@@ -1,5 +1,7 @@
 import 'package:appgain/Utils/helpers_fun.dart';
 import 'package:appgain/app_router.dart';
+import 'package:appgain/controllers/cubit/home_page_cubit.dart';
+import 'package:appgain/views/screens/home_screen/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,8 @@ Future<void> backGroundMessage(RemoteMessage message) async {
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);  await Firebase.initializeApp();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp();
   var token = await FirebaseMessaging.instance.getToken();
   printMessage('$token');
   FirebaseMessaging.onMessage.listen((event) {
@@ -29,13 +32,11 @@ void main() async {
   FirebaseMessaging.onMessageOpenedApp.listen((event) {});
   //BACKGROUND FCM
   FirebaseMessaging.onBackgroundMessage(backGroundMessage);
-  DioHelper.init();
   Bloc.observer = MyBlocObserver();
   runApp(MyApp(
-      appRouter: AppRouter(),
-      ));
+    appRouter: AppRouter(),
+  ));
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -52,11 +53,13 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: Themes.lightTheme,
-            onGenerateRoute: appRouter.generateRoute,
-          );
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: Themes.lightTheme,
+              // home: const HomeScreen(),
+              onGenerateRoute: appRouter.generateRoute,
+            );
         });
   }
 }

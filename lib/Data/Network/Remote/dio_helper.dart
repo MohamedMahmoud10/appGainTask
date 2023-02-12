@@ -5,16 +5,15 @@ import 'package:flutter/foundation.dart';
 import '../../../core/end_point.dart';
 
 class DioHelper {
-  static late Dio dio;
-
-  static init() {
+  late Dio dio;
+  DioHelper() {
     BaseOptions baseOptions = BaseOptions(
       receiveDataWhenStatusError: true,
       baseUrl: baseUrl,
     );
     dio = Dio(baseOptions);
   }
-  static void logResponse(Response response) {
+  void logResponse(Response response) {
     if (kDebugMode) {
       print("Headers: ${response.headers}");
       print("Response: ${response.data}");
@@ -22,7 +21,7 @@ class DioHelper {
     }
   }
 
-  static Future<Response> getAllMovies(int? currentPage) async {
+  Future<Response> getAllMovies(int? currentPage) async {
     return await dio.get(popularMoviePath, queryParameters: {
       'api_key': apiKey,
       'language': 'en-US',
@@ -38,7 +37,7 @@ class DioHelper {
     });
   }
 
-  static Future<Response> getMovieDetails({required int id}) async {
+  Future<Response> getMovieDetails({required int id}) async {
     return await dio.get('$movieDetailsPath$id', queryParameters: {
       'api_key': apiKey,
       'language': 'en-US',
@@ -51,14 +50,6 @@ class DioHelper {
       }
       return error;
     });
-    // then((value) {
-    //   return value;
-    // }).catchError((error) {
-    //   if (kDebugMode) {
-    //     print(error.toString());
-    //   }
-    //   return error;
-    // });
   }
 
   Future<Response> getNowPlayingMovies() async {
